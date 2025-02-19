@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "AdoptionForm" ALTER COLUMN "catId" DROP NOT NULL,
+ALTER COLUMN "catId" DROP DEFAULT;
