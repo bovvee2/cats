@@ -38,7 +38,7 @@
         </div>
       </div>
     </div>
-    <div class="flex justify-center items-center mt-10" v-if="!loading">
+    <div class="flex justify-center items-center mt-10" v-if="!loading && cats?.length > 0">
       <button
         @click="(page--, getCatsList())"
         :disabled="page === 1"
