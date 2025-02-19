@@ -1,6 +1,6 @@
 datasource db {
-  provider = "postgresql" 
-  url      = env("DATABASE_POSTGRES_URLL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
@@ -9,20 +9,24 @@ generator client {
 
 model Cat {
   id          Int      @id @default(autoincrement())
-  name        String
-  image      String
-  description   String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  name        String   @unique
+  image       String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  forms       AdoptionForm[]
 }
 
 model AdoptionForm {
   id          Int      @id @default(autoincrement())
-  catId       Int     
+  catId       Int
+  cat         Cat      @relation(fields: [catId], references: [id]) // Relação com Cat
   fullname    String
-  email       String
+  email       String   @unique
   telephone   String
   description String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  @@index([catId]) // Índice para melhorar consultas por catId
 }
