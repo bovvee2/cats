@@ -9,8 +9,7 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare && prisma generate",
     "lint": "eslint . --ext .js,.vue",
-    "lint:fix": "eslint . --ext .js,.vue --fix",
-    
+    "lint:fix": "eslint . --ext .js,.vue --fix"    
   },
   "dependencies": {
     "@prisma/client": "^6.3.1",
