@@ -22,7 +22,7 @@
           class="block text-primary animate-spin mx-auto"
         />
       </div>
-      <h2 class="text-xl bold text-center my-5 " v-if="!cats">There are no cats available at the moment.</h2>
+      <h2 class="text-xl bold text-center my-5 " v-if="cats?.length <= 0">There are no cats available at the moment.</h2>
       <div class="mt-5 flex gap-5">
         <div
           class="mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5"
@@ -53,7 +53,7 @@
       <span>Página {{ page }} de {{ totalPages }}</span>
       <button
         @click="(page++, getCatsList())"
-        :disabled="page === totalPages"
+        :disabled="page === totalPages || totalPages === 0"
         class="px-4 py-2 ml-3 bg-primary text-white rounded-lg disabled:bg-gray-300"
       >
         <Icon
