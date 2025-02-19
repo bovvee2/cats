@@ -1,25 +1,20 @@
-import { SupabaseClient } from '@supabase/supabase-js'
-
-export default defineNuxtRouteMiddleware(async () => {
+export default defineNuxtRouteMiddleware((to, from) => {
   if (import.meta.server) return
 
-  const { $supabase } = useNuxtApp() as unknown as { $supabase: SupabaseClient }
+  const { $supabase } = useNuxtApp()
 
-  if (!$supabase) {
-    return navigateTo('/admin/login')
-  }
+  if (!$supabase) return navigateTo('/admin/login')
 
-  const { data: { session } } = await $supabase.auth.getSession()
+  $supabase.auth.getSession().then(({ data: { session } }) => {
+    if (!session) {
+      return navigateTo('/admin/login')
+    }
 
-  if (!session) {
-    console.log('Sessão não encontrada, redirecionando para login...')
-    return navigateTo('/admin/login')
-  }
-
-  const expiresAt = Number(localStorage.getItem('expires_at'))
-  if (!expiresAt || Date.now() >= expiresAt * 1000) {
-    localStorage.removeItem('token')
-    localStorage.removeItem('expires_at')
-    return navigateTo('/admin/login')
-  }
+    const expiresAt = Number(localStorage.getItem('expires_at'))
+    if (!expiresAt || Date.now() >= expiresAt * 1000) {
+      localStorage.removeItem('token')
+      localStorage.removeItem('expires_at')
+      return navigateTo('/admin/login')
+    }
+  })
 })

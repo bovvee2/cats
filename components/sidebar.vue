@@ -83,7 +83,15 @@ const logout = () => {
 }
 
 const getRoutes = () => {
+  console.log(router.getRoutes())
   routes.value = router.getRoutes()?.filter((route) => route.name !== 'login')
+
+
+  routes.value.sort((a, b) => {
+    if (a.meta.title === 'Cat list') return -1
+    if (b.meta.title === 'Cat list') return 1
+    return 0
+  })
 }
 </script>
 
